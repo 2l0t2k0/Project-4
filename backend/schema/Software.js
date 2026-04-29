@@ -6,10 +6,6 @@ const SoftwareSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  version: {
-    type: String,
-    required: true,
-  },
   description: {
     type: String,
   },
@@ -18,6 +14,30 @@ const SoftwareSchema = new mongoose.Schema({
     ref: 'Dept',
     required: true,
   },
+},{timestamps: true});
+
+const TicketSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+  },
+  software: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Software',
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ['open', 'in progress', 'closed'],
+    default: 'open',
+  },
+  supportingfiles: [{
+    filename: String,
+    url: String,
+  }],
 },{timestamps: true});
 
 const Software = mongoose.model('Software', SoftwareSchema);

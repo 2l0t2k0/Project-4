@@ -13,7 +13,7 @@ app.get('/user', (req, res) => {
   res.send('User endpoint');
 });
 
-app.post('/user', async (req, res) => {
+app.post('/create/user', async (req, res) => {
   try { 
   const userInDatebase = await User.findOne({ email: req.body.email });
   if (userInDatebase) {
@@ -30,6 +30,30 @@ app.post('/user', async (req, res) => {
 }
 catch (err) {  res.status(500).json({ error: 'Failed to create user' });
 }
+});
+
+app.post('/create/dept', async (req, res) => {
+  try {
+    const dept = await Dept.create({
+      name: req.body.name,
+    });
+
+    res.status(201).json(dept);
+  }
+  catch (err) {  res.status(500).json({ error: 'Failed to create dept' });
+  }
+});
+
+app.post('/create/software', async (req, res) => {
+  try {
+    const software = await Software.create({
+      name: req.body.name,
+    });
+
+    res.status(201).json(software);
+  }
+  catch (err) {  res.status(500).json({ error: 'Failed to create software' });
+  }
 });
 
 app.get('/dept', (req, res) => {
