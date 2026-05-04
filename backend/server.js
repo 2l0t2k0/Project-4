@@ -4,6 +4,10 @@ const dotenv = require('dotenv');
 dotenv.config();
 const mongoose = require('mongoose');
 const cors = require('cors');
+const logger = require('morgan')
+require('./middleware/dbconnect');
+
+mongoose.set('debug', true)
 // const Dept = require('./schema/Dept')
 
 // const connect = async () => {
@@ -26,7 +30,7 @@ const cors = require('cors');
 // connect();
 app.use(express.json());
 app.use(cors());
-
+app.use(logger('dev'));
 
 const port = 3000;
 

@@ -35,8 +35,8 @@ exports.createDept = async (req, res) => {
     //   return res.status(400).json({ error: 'Department already exists' });
     // }
     const dept = await Dept.create({
-      name: "General",
-      description: "General department for all unassigned persons/software",
+      name: req.body.name,
+      description: req.body.description,
     });
     res.status(201).json(dept);
   } catch (error) {

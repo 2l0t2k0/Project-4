@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
   Dept: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Dept',
-    default: 'General'
+    default: '69f81f40d3353d871939b243'
   },
   Permissions: {
     type: String,

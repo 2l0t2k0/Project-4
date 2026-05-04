@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.3",
     "jwt": "^0.2.0",
     "mongoose": "^9.6.1",
+    "morgan": "^1.10.1",
     "nodemon": "^3.1.14",
     "router": "^2.2.0"
   }
