@@ -51,7 +51,4 @@ router.get('/', getAllDepts);
 router.put('/:id', EditDept);
 router.delete('/:id', DeleteDept);
 
-router.get('/:id', getDept);
-router.get('/', getAllDepts);
-
 module.exports = router;

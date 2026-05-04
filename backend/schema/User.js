@@ -1,5 +1,4 @@
-import Dept from './Dept';
-
+const Dept = require('./Dept');
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -12,14 +11,20 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  password: {
+  hashedpassword: {
     type: String,
     required: true,
   },
   Dept: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Dept',
+    default: 'General'
   },
+  Permissions: {
+    type: String,
+    enum: ['User', 'Admin', 'SuperAdmin'],
+    default: 'User'
+  }
 },{timestamps: true});
 
 const User = mongoose.model('User', userSchema);

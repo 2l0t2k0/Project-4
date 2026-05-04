@@ -1,68 +1,41 @@
 const express = require('express');
 const app = express();
-const bcrypt = require('bcrypt');
-const User = require('./schema/User');
-const Dept = require('./schema/Dept');
-const Software = require('./schema/Software');
-const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
+const mongoose = require('mongoose');
+const cors = require('cors');
+// const Dept = require('./schema/Dept')
+
+// const connect = async () => {
+//   await mongoose.connect(process.env.MONGODB_URI),
+//   console.log('Connected to MongoDB');
+//   await runbase();
+//   await mongoose.disconnect();
+// }
+
+// const runbase = async () => {
+//   const dept = await Dept.create({
+//     name: "General",
+//     description: "General department for all unassigned persons/software",
+//   });
+//   console.log(dept)
+//   ;
+
+// }
+
+// connect();
+app.use(express.json());
+app.use(cors());
 
 
 const port = 3000;
 
-app.get('/user', (req, res) => {
-  res.send('User endpoint');
-});
 
-app.post('/create/user', async (req, res) => {
-  try { 
-  const userInDatebase = await User.findOne({ email: req.body.email });
-  if (userInDatebase) {
-    return res.status(400).json({ error: 'Email already exists' }); //note: this is a bad practice, we should not reveal if the email exists or not, but for testing purpose we can do it
-  }
+//Imported routes
+const createRoutes = require('./routes/CreateRoutes');
 
-  const user = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: await bcrypt.hash(req.body.password, 10),
-  });
 
-  res.status(201).json(user);
-}
-catch (err) {  res.status(500).json({ error: 'Failed to create user' });
-}
-});
-
-app.post('/create/dept', async (req, res) => {
-  try {
-    const dept = await Dept.create({
-      name: req.body.name,
-    });
-
-    res.status(201).json(dept);
-  }
-  catch (err) {  res.status(500).json({ error: 'Failed to create dept' });
-  }
-});
-
-app.post('/create/software', async (req, res) => {
-  try {
-    const software = await Software.create({
-      name: req.body.name,
-    });
-
-    res.status(201).json(software);
-  }
-  catch (err) {  res.status(500).json({ error: 'Failed to create software' });
-  }
-});
-
-app.get('/dept', (req, res) => {
-  res.send('Dept endpoint');
-});
-
-app.get('/software', (req, res) => {
-  res.send('Software endpoint');
-});
+app.use('/create', createRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
