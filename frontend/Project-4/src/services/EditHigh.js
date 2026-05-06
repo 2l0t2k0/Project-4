@@ -1,0 +1,66 @@
+const baseURL = import.meta.env.VITE_BACKEND_HOST;
+
+const editTicket = async (ticketId, updatedData) => {
+  try {
+    const response = await fetch(`${baseURL}/api/tickets/${ticketId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error("Failed to update ticket.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
+
+const editSoftware = async (softwareId, updatedData) => {
+  try {
+    const response = await fetch(`${baseURL}/api/software/${softwareId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error("Failed to update software.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
+const editUser = async (userId, updatedData) => {
+  try {
+    const response = await fetch(`${baseURL}/api/users/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error("Failed to update user.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
+
+
+export { editTicket, editSoftware, editUser };
