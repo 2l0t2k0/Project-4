@@ -6,6 +6,7 @@ const EditSelf = async (userId, updatedData) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(updatedData),
     });
@@ -23,10 +24,11 @@ const EditSelf = async (userId, updatedData) => {
 
 const editTicket = async (ticketId, updatedData) => {
   try {
-    const response = await fetch(`${baseURL}/api/tickets/${ticketId}`, {
+    const response = await fetch(`${baseURL}/tickets/${ticketId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(updatedData),
     });

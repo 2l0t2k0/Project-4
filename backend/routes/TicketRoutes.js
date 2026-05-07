@@ -8,5 +8,7 @@ const { getTicket, getAllTickets, getOwnTickets } = require('../controllers/Tick
 router.get('/', verifyToken, verifyPerms(['Admin', 'SuperAdmin']), getAllTickets);
 router.get('/own', verifyToken, getOwnTickets);
 router.get('/:id', verifyToken, getTicket);
+router.put('/:id', verifyToken, getTicket);
+router.delete('/:id', verifyToken, getTicket);
 
 module.exports = router;

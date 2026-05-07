@@ -23,7 +23,6 @@ const navigate = useNavigate()
         setFormData({ email: "", password: "" })
         localStorage.setItem("token", response.token);
         localStorage.setItem("user", JSON.stringify(response.user));
-        ;
         navigate("/home");
       } else {
         alert("Failed to login.");

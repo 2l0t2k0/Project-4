@@ -2,10 +2,11 @@ const baseURL = import.meta.env.VITE_BACKEND_HOST;
 
 const editTicket = async (ticketId, updatedData) => {
   try {
-    const response = await fetch(`${baseURL}/api/tickets/${ticketId}`, {
+    const response = await fetch(`${baseURL}/tickets/${ticketId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(updatedData),
     });
@@ -27,6 +28,7 @@ const editSoftware = async (softwareId, updatedData) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(updatedData),
     });
@@ -47,6 +49,7 @@ const editUser = async (userId, updatedData) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(updatedData),
     });

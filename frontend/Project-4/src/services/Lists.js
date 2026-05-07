@@ -16,7 +16,7 @@ const getUsers = async () => {
 
 const getOneUser = async (id) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/users/${id}`);
+    const response = await fetch(`${BASE_URL}/users/${id}`);
     if (response.ok) {
       return await response.json();
     } else {
@@ -30,7 +30,7 @@ const getOneUser = async (id) => {
 
 const getSoftware = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/api/software`);
+    const response = await fetch(`${BASE_URL}/software`);
     if (response.ok) {
       return await response.json();
     } else {
@@ -44,7 +44,7 @@ const getSoftware = async () => {
 
 const getOneSoftware = async (id) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/software/${id}`);
+    const response = await fetch(`${BASE_URL}/software/${id}`);
     if (response.ok) {
       return await response.json();
     } else {
@@ -58,7 +58,12 @@ const getOneSoftware = async (id) => {
 
 const getTickets = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/api/tickets`);
+    const response = await fetch(`${BASE_URL}/tickets`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (response.ok) {
       return await response.json();
     } else {
@@ -68,11 +73,17 @@ const getTickets = async () => {
     console.error("Error:", error);
     throw error;
   }
-};
+}
 
 const getOneTicket = async (id) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/tickets/${id}`);
+    const response = await fetch(`${BASE_URL}/tickets/${id}`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    });
     if (response.ok) {
       return await response.json();
     } else {
