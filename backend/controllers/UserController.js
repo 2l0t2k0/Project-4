@@ -33,6 +33,21 @@ async function EditUserDept(req, res) {
     res.status(400).json({ error: error.message });
   }
 }
+
+async function EditUserPerms(req, res) {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, {
+        perms: req.body.perms,
+    }, { new: true });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
 async function DeleteUser(req, res) {
   try {
     const user = await User.findByIdAndDelete(req.params.id);

@@ -9,8 +9,8 @@ const NavBar = () => {
             <NavLink to="/list-software">List Software</NavLink>
             <NavLink to="/list-tickets">List Tickets</NavLink>
             <NavLink to="/edit-dept">Edit Dept</NavLink>
-            <NavLink to="/edit-user">Edit User</NavLink>
-            <NavLink to="/edit-ticket">Edit Ticket</NavLink>
+            <NavLink to="/new-user">New User</NavLink>
+            <NavLink to="/new-ticket">New Ticket</NavLink>
             <button>Logout</button>
         </nav>
     )

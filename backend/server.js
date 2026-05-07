@@ -21,11 +21,12 @@ const port = 3000;
 //Imported routes
 const createRoutes = require('./routes/CreateRoutes');
 const authRoutes = require('./routes/authroutes');
+const TicketRoutes = require('./routes/TicketRoutes');
 
 //Use routes
 app.use('/auth', authRoutes);
 app.use('/create', createRoutes);
-
+app.use('/tickets', TicketRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

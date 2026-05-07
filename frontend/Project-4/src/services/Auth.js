@@ -1,10 +1,11 @@
 const Base_URL = import.meta.env.VITE_BACKEND_HOST;
 
-import { useNavigate } from "react-router-dom";
+
 
 const login = async (credentials) => {
+  console.log("Attempting to log in with credentials:", credentials);
   try {
-    const response = await fetch(`${Base_URL}/api/login`, {
+    const response = await fetch(`${Base_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -14,12 +15,14 @@ const login = async (credentials) => {
 
     if (response.ok) {
       return await response.json();
+        
     } else {
       throw new Error("Login failed.");
     }
   } catch (error) {
     console.error("Error:", error);
     throw error;
+    
   }
 }
 const logout = () => {

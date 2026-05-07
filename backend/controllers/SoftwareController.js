@@ -14,27 +14,16 @@ async function getSoftware(req, res) {
 }
 async function getAllSoftware(req, res) {
   try {
-    const software = await Software.find().populate('dept');
+    const software = await Software.find().populate('dept', 'status');
     res.json(software);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 }
-async function getTicketbyId(req, res) {
+async function getDeptSoftware(req, res) {
   try {
-    const ticket = await Ticket.findById(req.params.id).populate('software');
-    if (!ticket) {
-      return res.status(404).json({ error: 'Ticket not found' });
-    }
-    res.json(ticket);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-}
-async function getTicketsBySoftware(req, res) {
-  try {
-    const tickets = await Ticket.find({ software: req.params.id }).populate('software');
-    res.json(tickets);
+    const software = await Software.find({ dept: req.params.deptId }).populate('dept');
+    res.json(software);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -42,7 +31,6 @@ async function getTicketsBySoftware(req, res) {
 
 router.get('/:id', getSoftware);
 router.get('/', getAllSoftware);
-router.get('/ticket/:id', getTicketbyId);
-router.get('/:id/tickets', getTicketsBySoftware);
+router.get('/dept/:deptId', getDeptSoftware);
 
 module.exports = router;

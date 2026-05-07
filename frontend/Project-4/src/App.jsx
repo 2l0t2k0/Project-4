@@ -11,7 +11,9 @@ import EditTicket from "./pages/EditTicket";
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import NavBar from './components/NavBar';
-
+import NewUser from './pages/NewUser';
+import NewTicket from './pages/NewTicket';
+import NewDept from './pages/NewDept';
 
 function App() { //! App current has no protected routes
     return (
@@ -22,7 +24,7 @@ function App() { //! App current has no protected routes
           <Routes>
             
             {/*Public Routes*/}
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             {/* <AuthContext> */}
             {/*Protected Routes*/}
@@ -32,8 +34,9 @@ function App() { //! App current has no protected routes
             <Route path="/list-software" element={<ListSoftware />} />
             <Route path="/list-tickets" element={<ListTickets />} />
             <Route path="/edit-dept" element={<EditDept />} />
-            <Route path='/edit-user' element={<EditUser />} />
-            <Route path='/edit-ticket' element={<EditTicket />} />
+            <Route path='/new-user' element={<NewUser />} />
+            <Route path='/new-ticket' element={<NewTicket />} />
+            <Route path='/new-dept' element={<NewDept />} />
             {/* </ AuthContext> */}
             <Route path="/*" element={ <h1>404 Not Found</h1>} />
           </Routes> 

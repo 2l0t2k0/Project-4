@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_BACKEND_HOST
 //! GetXs should only grab a few fields to display in the list, not all the details. GetOneX should grab all the details for that item.
 const getUsers = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/api/users`);
+    const response = await fetch(`${BASE_URL}/users`);
     if (response.ok) {
       return await response.json();
     } else {

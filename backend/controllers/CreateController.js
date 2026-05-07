@@ -59,31 +59,34 @@ exports.createSoftware = async (req, res) => {
   }
 }
 
-// exports.createTicket = async (req, res) =>   {
-//   try {       
-//     const softwareinDatabase = await Software.findOne({ name: req.body.software });
-//     if (!softwareinDatabase) {
-//       await Software.create({
-//         name: req.body.software,
-//         description: 'This software was created automatically because it was not found in the database when creating a ticket.',
-//         dept: req.body.Dept,
-//       },
-//       );
-//     }
-//     const softwareid = await Software.findOne({ name: req.body.software }).select('_id');
-//     const ticket = await Ticket.create({
-//       software: softwareid,
-//       Ticketreason: req.body.Ticketreason,
-//       reason: req.body.reason,
-//       Version: req.body.Version,
-//       URL: req.body.URL,
-//       Dept: req.body.Dept,
-//       Submitter: req.body.Submitter,  //this should be userid obtained from token
-//       Notes: req.body.Notes,
-//     });
-//     res.status(201).json(ticket);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// }
+exports.createTicket = async (req, res) =>   {
+  try { 
+    const user = req.user.id
+    const dept = req.user.dept      
+    const softwareinDatabase = await Software.findOne({ name: req.body.software });
+    if (!softwareinDatabase) {
+      await Software.create({
+        name: req.body.software,
+        description: 'This software was created automatically because it was not found in the database when creating a ticket.',
+        dept: dept,
+      },
+      );
+    }
+    
+    const softwareid = await Software.findOne({ name: req.body.software }).select('_id');
+    const ticket = await Ticket.create({
+      software: softwareid,
+      Ticketreason: req.body.Ticketreason,
+      reason: req.body.reason,
+      Version: req.body.Version,
+      URL: req.body.URL,
+      Dept: dept,
+      Submitter: user,  //this should be userid obtained from token
+      Notes: req.body.Notes,
+    });
+    res.status(201).json(ticket);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
 

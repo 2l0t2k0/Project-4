@@ -12,7 +12,7 @@ export const headers = () => {
     return headerdata;
 };
 
-const NewUser = async (userData) => {
+const newUser = async (userData) => {
   try {
     const response = await fetch(`${BaseURL}/create/user`, {
       method: 'POST',
@@ -26,7 +26,7 @@ const NewUser = async (userData) => {
     throw error;
   }
 };  
-const NewSoftware = async (softwareData) => {
+const newSoftware = async (softwareData) => {
   try {
     const response = await fetch(`${BaseURL}/create/software`, {
       method: 'POST',
@@ -40,7 +40,7 @@ const NewSoftware = async (softwareData) => {
     throw error;
   }
 };  
-const NewTicket = async (ticketData) => {
+const newTicket = async (ticketData) => {
   try {
     const response = await fetch(`${BaseURL}/create/ticket`, {
       method: 'POST',
@@ -55,4 +55,4 @@ const NewTicket = async (ticketData) => {
   }
 };  
 
-export { NewUser, NewSoftware, NewTicket };
+export { newUser, newSoftware, newTicket };

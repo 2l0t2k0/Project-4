@@ -13,7 +13,7 @@ exports.login = async (req, res) => {
     if (!validPassword) {
       return res.status(400).json({ error: 'Invalid email or password' });
     }
-    const payload = { id: user._id, email: user.email, perms: user.perms, name: user.name };
+    const payload = { id: user._id, perms: user.Permissions, name: user.name, dept: user.Dept };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(200).json({ token, user: payload });
   } catch (error) {
@@ -28,7 +28,7 @@ exports.login = async (req, res) => {
 
 
 
-exports.register = async (req, res) => {
+exports.register = async (req, res) => { //! This is a security risk, and is only here for testing purposes. In a real application, user creation should be handled by an admin with proper permissions.
   try {
     const userInDatabase = await User.findOne({ email: req.body.email });
     if (userInDatabase) {
@@ -40,7 +40,7 @@ exports.register = async (req, res) => {
       email: req.body.email,
       hashedpassword: await bcrypt.hash(password, 10),
     });
-    const payload = { id: user._id, email: user.email, perms: user.perms, name: user.name };
+    const payload = { id: user._id, perms: user.Permissions, name: user.name, dept: user.Dept };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(201).json({ user: payload, token });
     

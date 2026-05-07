@@ -1,10 +1,12 @@
 import { useState } from "react";
 import UserForm from "../components/UserForm";
+import { newUser } from "../services/NewEntry";
+
 
 function NewUser() {
     const title = "Create New User";
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -16,14 +18,10 @@ function NewUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
+      const response = await newUser(formData);
+      if (!response.error) {
         alert("User created successfully!");
-        setFormData({ username: "", email: "", password: "" });
+        setFormData({ name: "", email: "", password: "" });
       } else {
         alert("Failed to create user.");
       }

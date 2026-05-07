@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DeptForm from "../components/DeptForm";
 
-function NewDept() {
+function NewDept() { //!this page needs to be restricted to admin users only
   const [formData, setFormData] = useState({
     name: "",
     location: "",

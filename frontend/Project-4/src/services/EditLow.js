@@ -2,7 +2,7 @@ const baseURL = import.meta.env.VITE_BACKEND_HOST;
 
 const EditSelf = async (userId, updatedData) => {
   try {
-    const response = await fetch(`${baseURL}/api/users/${userId}`, {
+    const response = await fetch(`${baseURL}/users/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
