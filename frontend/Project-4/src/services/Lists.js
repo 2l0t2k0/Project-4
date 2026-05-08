@@ -94,5 +94,23 @@ const getOneTicket = async (id) => {
     throw error;
   }
 };
+const getownTickets = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/tickets/own`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error("Failed to fetch tickets.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}
 
-export { getUsers, getOneUser, getSoftware, getOneSoftware, getTickets, getOneTicket };
+export { getUsers, getOneUser, getSoftware, getOneSoftware, getTickets, getOneTicket, getownTickets };

@@ -1,76 +1,16 @@
-import { useState } from 'react';
-
-function TicketingForm() {
-  const [formData, setFormData] = useState({
-    Dept: '',
-    software: '',
-    Ticketreason: '',
-    reason: '',
-    Version: '',
-  });
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('/api/ticket', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        alert('Ticket created successfully!');
-        setFormData({
-          Dept: '',
-          software: '',
-          Ticketreason: '',
-          reason: '',
-          Version: '',
-        });
-      } else {
-        alert('Failed to create ticket.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while creating the ticket.');
-    }
-  };
+function TicketingForm({ handleSubmit, handleChange, formData ,title}) {
+  const user = JSON.parse(localStorage.getItem('user'));// Assuming user info is stored in localStorage after login
+ 
 
   return (
     <div>
-      <h2>Create Ticket</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="Dept"
-          placeholder="Department"
-          value={formData.Dept}
-          onChange={handleChange}
-          required
-        />
-        <input
+      <h2>{title}</h2>
+      <form onSubmit={handleSubmit}>       
+         <input
           type="text"
           name="software"
           placeholder="Software"
           value={formData.software}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="Ticketreason"
-          placeholder="Ticket Reason (new/update)"
-          value={formData.Ticketreason}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="reason"
-          placeholder="Reason for ticket"
-          value={formData.reason}
           onChange={handleChange}
           required
         />
@@ -81,7 +21,48 @@ function TicketingForm() {
           value={formData.Version}
           onChange={handleChange}
           required
+        />{user.perms.includes("Admin") && (
+        <input
+          type="text"
+          name="Dept"
+          placeholder="Department"
+          value={formData.Dept}
+          onChange={handleChange}
+          required
+        />)}
+        <select          
+          name="Ticketreason"
+          placeholder="(new/update)"
+          value={formData.Ticketreason}
+          onChange={handleChange}
+          required
+        >
+          <option value="new">New</option>
+          <option value="update">Update</option>
+        </select>
+        <input
+          type="text"
+          name="reason"
+          placeholder="Reason for ticket"
+          value={formData.reason}
+          onChange={handleChange}
+          required
         />
+        {user.perms.includes("Admin") && (
+        <select 
+          name="status"
+          placeholder="Open"
+          value={formData.status}
+          onChange={handleChange}
+          required
+        >
+          <option value="open">Open</option>
+          <option value="in progress">In Progress</option>
+          <option value="closed">Closed</option>
+        </select>
+         )  
+        }
+        
         <button type="submit">Create Ticket</button>
       </form>
     </div>

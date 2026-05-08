@@ -1,13 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import TicketingForm from "../components/TicketingForm";
+import { editTicket } from "../services/EditHigh";
+import { useParams } from "react-router-dom";
+import { getOneTicket } from "../services/Lists";
+
 
 function EditTicket() {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    softwareId: "",
-    userId: "",
-  });
+const [formData, setFormData] = useState({
+    Dept: '',
+    software: '',
+    Ticketreason: '',
+    reason: '',
+    Version: '',
+  })
   const title = "Edit Ticket";
+  const {id} = useParams()
+
+  useEffect(() => {
+    // Fetch the existing ticket data using the id and populate the formData state
+    // This should call the backend to get the ticket details and setFormData with the response.
+    getOneTicket(id).then((res) => setFormData(res));
+  }, [id]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -15,34 +29,24 @@ function EditTicket() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/tickets", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const response = await editTicket(id, formData); 
       if (response.ok) {
-        alert("Ticket created successfully!");
-        setFormData({ title: "", description: "", softwareId: "", userId: "" });
+        alert("Ticket edited successfully!");
+        setFormData({ Dept: '', software: '', Ticketreason: '', reason: '', Version: '' });
       } else {
-        alert("Failed to create ticket.");
+        alert("Failed to edit ticket.");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while creating the ticket.");
+      alert("An error occurred while editing the ticket.");
     }
   };
 
   return (
     <div>
       <h1>{title}</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Title" required />
-        <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" required />
-        <input type="text" name="softwareId" value={formData.softwareId} onChange={handleChange} placeholder="Software ID" required />
-        <input type="text" name="userId" value={formData.userId} onChange={handleChange} placeholder="User ID" required />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+      <TicketingForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} title={title} />
+    </div>    
   );
 }
 

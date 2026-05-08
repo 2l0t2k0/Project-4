@@ -40,6 +40,7 @@ const newSoftware = async (softwareData) => {
     throw error;
   }
 };  
+
 const newTicket = async (ticketData) => {
   try {
     const response = await fetch(`${BaseURL}/create/ticket`, {

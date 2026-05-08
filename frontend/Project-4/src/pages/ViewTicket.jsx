@@ -1,33 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {useParams, NavLink} from "react-router-dom";
+import { getOneTicket } from "../services/Lists";
 
 const ViewTicket = () => {
-  const [ticket, setTicket] = useState(null);
+  const [ticket, setTicket] = useState({});
+  const { id } = useParams();
 
-  const fetchTicket = async (id) => {
-    try {
-      const response = await fetch(`/api/tickets/${id}`);
-      if (response.ok) {
-        const data = await response.json();
-        setTicket(data);
-      } else {
-        alert("Failed to fetch ticket.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred while fetching the ticket.");
-    }
-  };
 
+  useEffect(() => {
+    const data = getOneTicket(id);
+    data.then((res) => setTicket(res));
+  }, [id]);
+
+
+  //Note: Response will return object ids for their respective tables, will need to call for name.
   return (
     <div>
       <h1>View Ticket</h1>
-      <button onClick={() => fetchTicket(1)}>Fetch Ticket with ID 1</button>
-      {ticket && (
+      
         <div>
-          <h2>{ticket.title}</h2>
-          <p>{ticket.description}</p>
+          <h2>{ticket.software}</h2>
+          <h3>Version: {ticket.Version}</h3>
+          <p>Reason: {ticket.reason}</p>
+          <p>Status: {ticket.status}</p>
+          <p>{ticket.Notes}</p>
+        <button><NavLink to={`/tickets/edit/${id}`}>Edit Ticket</NavLink></button>
+        <button><NavLink to="/tickets">Back to Tickets</NavLink></button>
         </div>
-      )}
+      
     </div>
   );
 }
